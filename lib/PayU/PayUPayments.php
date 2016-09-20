@@ -8,6 +8,8 @@
  * @version 1.0.0, 17/10/2013
  * 
  */
+
+
 class PayUPayments{
 	
 	
@@ -106,6 +108,7 @@ class PayUPayments{
 				PayUParameters::VALUE,
 		);
 		
+
 		$paymentMethodParameter = CommonRequestUtil::getParameter($parameters, PayUParameters::PAYMENT_METHOD);
 		
 		if($paymentMethodParameter != null){

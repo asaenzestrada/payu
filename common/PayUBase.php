@@ -1,20 +1,25 @@
 <?php
     namespace common;
     
-    use PayU; 
+    require_once(dirname(dirname(__FILE__)).'/lib/'.'PayU.php');
+    require_once(dirname(dirname(__FILE__)).'\lib'.'\PayU'.'\api'.'\SupportedLanguages.php');
     
+    use PayU;
+    use SupportedLanguages;
+    use Environment;
+    use PayUPayments;
 
-    
     class payUBase{
-        public $cfg;
+        public static $cfg;
         
         public function __construct($config=[]){
+            $config = self::getDefaults();
             self::checkParams($config, self::getDefaults());
-            $this->cfg = array_merge(self::getDefaults(), $config);
+            self::$cfg = array_merge(self::getDefaults(), $config);
         }
         
         public static function setEnvironment(){
-            if ($this->$cfg['isTest'] == true) {
+            if (self::$cfg['isTest'] == true) {
                 Environment::setPaymentsCustomUrl ( "https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi" );
                 Environment::setReportsCustomUrl ( "https://sandbox.api.payulatam.com/reports-api/4.0/service.cgi" );
                 Environment::setSubscriptionsCustomUrl("https://sandbox.api.payulatam.com/payments-api/rest/v4.3/");
@@ -28,11 +33,12 @@
         
         public static function run(){
             self::setEnvironment();
-            \PayU::$apiKey = $this->$cfg['apiKey'];
-            \PayU::$apiLogin = $this->$cfg['apiLogin'];
-            \PayU::$merchantId = $this->$cfg['merchantId'];
-            \PayU::$language = $this->$cfg['language'];
-            \PayU::$isTest = $this->$cfg['isTest'];
+
+            \PayU::$apiKey = self::$cfg['apiKey'];
+            \PayU::$apiLogin = self::$cfg['apiLogin'];
+            \PayU::$merchantId = self::$cfg['merchantId'];
+            \PayU::$language = self::$cfg['language'];
+            \PayU::$isTest = self::$cfg['isTest'];
         }
         
         public static function getDefaults(){
@@ -46,11 +52,26 @@
         }
 
         public static function checkParams(array $array, array $reqParams){
-            foreach ($reqParams as $param){
+            foreach (array_keys($reqParams) as $param){
                 if (!key_exists($param, $array))
                     throw new \Exception("Key <<<$param>>> is required.");
             }
             return true;
+        }
+        
+        public static function response(){
+        $response = PayUPayments::doAuthorizationAndCapture(self::$cfg);
+        if($response){
+            echo $response->transactionResponse->orderId;
+            echo $response->transactionResponse->transactionId;
+            echo $response->transactionResponse->state;
+            if($response->transactionResponse->state=="PENDING"){
+                $response->transactionResponse->pendingReason;
+            }
+            $response->transactionResponse->trazabilityCode;
+            echo $response->transactionResponse->responseCode;
+
+        }
         }
 
     }

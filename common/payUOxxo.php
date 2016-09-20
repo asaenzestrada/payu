@@ -1,10 +1,9 @@
 <?php
 
 namespace common;
+require(dirname(__FILE__).'/'.'PayUBase.php');
 
 class payUOxxo extends payUBase{
-    
-    public $cfg;
     
     public function __construct($config=[]){
         parent::checkParams($config, self::getDefaults());
