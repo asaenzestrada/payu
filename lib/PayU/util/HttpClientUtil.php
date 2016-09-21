@@ -48,9 +48,7 @@ class HttpClientUtil {
 		}
 		
 		$curlResponse = curl_exec($curl);
-		
 		$httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-		
 		if($curlResponse === false && $httpStatus === 0){
 			throw new ConnectionException(PayUErrorCodes::CONNECTION_EXCEPTION, 'the url [' . $payUHttpRequestInfo->getUrl() . '] did not respond');
 		}

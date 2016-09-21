@@ -1,5 +1,5 @@
 <?php
-    namespace common;
+    namespace payUWrapper;
     
     require_once(dirname(dirname(__FILE__)).'/lib/'.'PayU.php');
     require_once(dirname(dirname(__FILE__)).'\lib'.'\PayU'.'\api'.'\SupportedLanguages.php');

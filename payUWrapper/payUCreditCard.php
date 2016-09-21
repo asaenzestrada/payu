@@ -1,5 +1,5 @@
 <?php
-namespace common;
+namespace payUWrapper;
 require(dirname(__FILE__).'/'.'PayUBase.php');
 
 use PayUParameters;

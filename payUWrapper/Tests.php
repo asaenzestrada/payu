@@ -1,8 +1,7 @@
 <?php
-namespace common;
+namespace payUWrapper;
 
 require(dirname(__FILE__).'/'.'payUCreditCard.php');
-use common\payUCreditCard;
 
 $array = [];
 $NewPayment = new payUCreditCard($array);
