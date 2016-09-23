@@ -110,6 +110,7 @@ class PayUPayments{
 		
 
 		$paymentMethodParameter = CommonRequestUtil::getParameter($parameters, PayUParameters::PAYMENT_METHOD);
+		print_r($parameters);
 		
 		if($paymentMethodParameter != null){
 			

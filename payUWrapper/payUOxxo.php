@@ -1,16 +1,20 @@
 <?php
 
 namespace payUWrapper;
-require(dirname(__FILE__).'/'.'PayUBase.php');
+require_once(dirname(__FILE__).'/'.'PayUBase.php');
 
 use PayUParameters;
 use PayUCountries;
+use PayUPayments;
 
 class payUOxxo extends payUBase{
     
     public function __construct($config=[]){
+        if (empty($config)) {
+            $config = self::getDefaults();
+        }
         parent::checkParams($config, self::getDefaults());
-        $this->cfg = array_merge(self::getDefaults(), $config);
+        parent::$cfg = array_merge(self::getDefaults(), $config);
     }
     
     public static function getDefaults(){
@@ -22,7 +26,7 @@ class payUOxxo extends payUBase{
                 //Ingrese aquí el identificador de la cuenta.
                 \PayUParameters::ACCOUNT_ID => "512324",
                 //Ingrese aquí el código de referencia.
-                \PayUParameters::RFERENCE_CODE => $reference,
+                \PayUParameters::REFERENCE_CODE => $reference,
                 //Ingrese aquí la descripción.
                 \PayUParameters::DESCRIPTION => "payment test",
                 
@@ -30,7 +34,7 @@ class payUOxxo extends payUBase{
                 //Ingrese aquí el valor.
                 \PayUParameters::VALUE => $value,
                 //Ingrese aquí la moneda.
-                'CURRENCY' => "MXN",
+                \PayUParameters::CURRENCY => "MXN",
                 
                 //Ingrese aquí el email del comprador.
                 \PayUParameters::BUYER_EMAIL => "buyer_test@test.com",
@@ -55,5 +59,20 @@ class payUOxxo extends payUBase{
 
 public static function run(){
     parent::run();
+}
+
+public static function response(){
+    $response = PayUPayments::doAuthorizationAndCapture(parent::$cfg);
+    if($response){
+        print_r($response->transactionResponse->orderId);
+        print_r($response->transactionResponse->transactionId);
+        print_r($response->transactionResponse->state);
+        if($response->transactionResponse->state=="PENDING"){
+            $response->transactionResponse->pendingReason;
+            $response->transactionResponse->extraParameters->URL_PAYMENT_RECEIPT_HTML;
+            $response->transactionResponse->extraParameters->REFERENCE;
+        }
+         print_r($response->transactionResponse->responseCode);
+    }
 }
 }

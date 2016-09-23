@@ -1,13 +1,15 @@
 <?php
 namespace payUWrapper;
-require(dirname(__FILE__).'/'.'PayUBase.php');
+require_once(dirname(__FILE__).'/'.'PayUBase.php');
 
 use PayUParameters;
 
 class payUCreditCard extends payUBase{
 
     public function __construct($config=[]){
-        $config = self::getDefaults();
+        if (empty($config)) {
+            $config = self::getDefaults();
+        }
         self::checkParams($config, self::getDefaults());
         parent::$cfg = array_merge(self::getDefaults(), $config);
     }

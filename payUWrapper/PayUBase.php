@@ -47,7 +47,7 @@
                     'apiLogin' => 'pRRXKOl8ikMmt9u',
                     'merchantId' => '508029',
                     'language' => SupportedLanguages::ES,
-                    'isTest' => True,
+                    'isTest' => False,
             ];
         }
 
