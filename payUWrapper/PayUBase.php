@@ -47,7 +47,7 @@
                     'apiLogin' => 'pRRXKOl8ikMmt9u',
                     'merchantId' => '508029',
                     'language' => SupportedLanguages::ES,
-                    'isTest' => False,
+                    'isTest' => True,
             ];
         }
 
@@ -62,14 +62,17 @@
         public static function response(){
         $response = PayUPayments::doAuthorizationAndCapture(self::$cfg);
         if($response){
-            echo $response->transactionResponse->orderId;
-            echo $response->transactionResponse->transactionId;
-            echo $response->transactionResponse->state;
+            $response->transactionResponse->orderId;
+            $response->transactionResponse->transactionId;
+            $response->transactionResponse->state;
             if($response->transactionResponse->state=="PENDING"){
-                $response->transactionResponse->pendingReason;
+                echo $response->transactionResponse->pendingReason;
+            }
+            if($response->transactionResponse->state=="PAYMENT_NETWORK_REJECTED "){
+                echo $response->transactionResponse->rejectionReason;
             }
             $response->transactionResponse->trazabilityCode;
-            echo $response->transactionResponse->responseCode;
+            $response->transactionResponse->responseCode;
 
         }
         }

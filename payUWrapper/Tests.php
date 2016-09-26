@@ -5,6 +5,6 @@ require(dirname(__FILE__).'/'.'payUCreditCard.php');
 require(dirname(__FILE__).'/'.'payUOxxo.php');
 
 $array = [];
-$NewPayment = new payUOxxo();
+$NewPayment = new payUCreditCard();
 $NewPayment->run();
 $NewPayment->response();

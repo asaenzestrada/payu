@@ -28,7 +28,7 @@ class payUCreditCard extends payUBase{
                         PayUParameters::VALUE => $value,
                         PayUParameters::CURRENCY => "MXN",
                 
-                        PayUParameters::BUYER_NAME => "APPROVED",
+                        PayUParameters::BUYER_NAME => "REJECTED",
                         PayUParameters::BUYER_EMAIL => "buyer_test@test.com",
                         PayUParameters::BUYER_CONTACT_PHONE => "7563126",
                         PayUParameters::BUYER_DNI => "5415668464654",
