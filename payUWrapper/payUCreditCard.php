@@ -4,6 +4,15 @@ require_once(dirname(__FILE__).'/'.'PayUBase.php');
 
 use PayUParameters;
 
+/**
+ * Credit card class for the PayU library implementation
+ *
+ * Incorporates the PayU credit card package and makes it easier to use.
+ *
+ * @package    PayU
+ * @subpackage payUWrapper
+ * @author     Javier Ruiz <javier.ruiz@gotribit.com>
+ */
 class payUCreditCard extends payUBase{
 
     public function __construct($config=[]){
@@ -13,7 +22,10 @@ class payUCreditCard extends payUBase{
         self::checkParams($config, self::getDefaults());
         parent::$cfg = array_merge(self::getDefaults(), $config);
     }
-    
+
+    /**
+     * Sets the PayUParameters variables with the default testing values
+     */
     public static function getDefaults(){
         $random = rand(0,10000);
         $reference = "payment_test_$random";
@@ -69,8 +81,5 @@ class payUCreditCard extends payUBase{
         ]);
     }
     
-    public static function run(){
-        parent::run();
-    }
 
 }

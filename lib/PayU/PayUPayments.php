@@ -110,7 +110,6 @@ class PayUPayments{
 		
 
 		$paymentMethodParameter = CommonRequestUtil::getParameter($parameters, PayUParameters::PAYMENT_METHOD);
-		print_r($parameters);
 		
 		if($paymentMethodParameter != null){
 			
@@ -122,7 +121,6 @@ class PayUPayments{
 				$requiredTokenId = array(
 				PayUParameters::INSTALLMENTS_NUMBER,
 				PayUParameters::TOKEN_ID);
-				
 				$required = array_merge($requiredAll, $requiredTokenId);
 			
 			}else if( array_key_exists(PayUParameters::CREDIT_CARD_NUMBER,$parameters) ){

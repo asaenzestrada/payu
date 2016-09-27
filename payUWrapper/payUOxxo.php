@@ -7,6 +7,15 @@ use PayUParameters;
 use PayUCountries;
 use PayUPayments;
 
+/**
+ * Cash class for the PayU library implementation
+ *
+ * Incorporates the PayU cash package and makes it easier to use.
+ *
+ * @package    PayU
+ * @subpackage payUWrapper
+ * @author     Javier Ruiz <javier.ruiz@gotribit.com>
+ */
 class payUOxxo extends payUBase{
     
     public function __construct($config=[]){
@@ -17,6 +26,9 @@ class payUOxxo extends payUBase{
         parent::$cfg = array_merge(self::getDefaults(), $config);
     }
     
+    /**
+     * Sets the PayUParameters variables with the default testing values
+     */
     public static function getDefaults(){
         $random = rand(0,10000);
         $reference = "payment_test_$random";
@@ -57,10 +69,12 @@ class payUOxxo extends payUBase{
     ]);
 }
 
-public static function run(){
-    parent::run();
-}
 
+/**
+ * Utilized the payU library to try to complete the payment
+ *
+ * @param array $cfg Configuration
+ */
 public static function response(){
     $response = PayUPayments::doAuthorizationAndCapture(parent::$cfg);
     if($response){
